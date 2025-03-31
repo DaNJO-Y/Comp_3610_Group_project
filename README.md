@@ -4,7 +4,7 @@ Some large files used in this project are stored externally due to size limitati
 
 You can download the necessary files using the links below:
 
-- [Download largefile.csv](https://drive.google.com/file/d/1Qy85zGdSu1v9wi5Giv56AQ4EL4z5cc_f/view?usp=sharing)
+- [Download credits.csv](https://drive.google.com/file/d/1Qy85zGdSu1v9wi5Giv56AQ4EL4z5cc_f/view?usp=sharing)
 - [Download dataset.zip](https://drive.google.com/file/d/your-other-file-id/view?usp=sharing)
 
 ### Instructions:
