@@ -1,6 +1,5 @@
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
-import pickle
 import joblib
 from datetime import datetime
 import numpy as np
@@ -13,11 +12,6 @@ model = joblib.load("box_office_predictor_xgboost.pkl")
 actor_encoder = joblib.load("actor_encoder.pkl")
 director_encoder = joblib.load("director_encoder.pkl")
 rating_encoder = joblib.load("rating_encoder.pkl")
-
-import pandas as pd
-from datetime import datetime
-
-
 # List of model feature columns
 model_features = ['runtime', 'budget', 'country_United States of America', 'country_France',
  'country_United Kingdom', 'country_Germany', 'country_Japan',
