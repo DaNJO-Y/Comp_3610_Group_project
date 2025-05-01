@@ -120,11 +120,17 @@ def process_form_data(form, director, lead_actor):
     dat = {"main_actor": [lead_actor]}
     wow = pd.DataFrame(dat)
     y = actor_encoder.transform(wow)
+
+    dat={"Rating": [form['rating']]}
+    wow = pd.DataFrame(dat)
+    z = rating_encoder.transform(wow)
+    print(z)
     print(y['main_actor'][0])
 
     print(x)
     data['director_encoded'] = x['director'][0]
     data['main_actor_encoded'] = y['main_actor'][0]
+    data["rating_encoded"] = z[0]
     # wow = pd.DataFrame({"director": [director]})
     # encoded_director = int(director_encoder.transform(wow)[0])  # extract scalar
     # data['director_encoded'] = [encoded_director]  # assign as list to make a valid DataFrame column
@@ -145,7 +151,7 @@ def index():
 def predict():
     # Get data from the form
     form = request.form
-    print(form)
+    # print(form)
     # print(form['director'])
     # print(form['lead_actor'])
     df = process_form_data(form, form['director'], form['lead_actor'] )
@@ -155,7 +161,7 @@ def predict():
     print(feature_names)
     # Ensure the dataframe columns are in the same order as the training feature names
     df = df[feature_names]
-    print(df.columns)
+    # print(df.columns)
     # Make prediction
     prediction = model.predict(df)
     prediction = np.expm1(prediction)
