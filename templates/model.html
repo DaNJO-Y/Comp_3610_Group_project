@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Box Office Prediction</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #333;
+      color: #eee;
+      margin: 20px;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #ffdd00;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    form {
+      background-color: #444;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #666;
+      border-radius: 4px;
+      background-color: #555;
+      color: #eee;
+      box-sizing: border-box;
+    }
+
+    .autocomplete-container {
+      position: relative;
+    }
+
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #555;
+      border: 1px solid #666;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      z-index: 10;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .autocomplete-item:hover {
+      background-color: #666;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .checkbox-group {
+      background-color: #555;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    .checkbox-option {
+      margin: 5px 0;
+      display: block;
+    }
+
+    .checkbox-option input {
+      margin-right: 8px;
+    }
+
+    .selected-options {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-top: 5px;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #444;
+      border-radius: 5px;
+      display: none;
+    }
+
+    #predictionValue {
+      font-size: 24px;
+      color: #ffdd00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Movie Box Office Prediction</h1>
+  <form id="movieForm">
+    <div class="form-group">
+      <label for="runtime">Runtime (minutes):</label>
+      <input type="number" id="runtime" name="runtime" min="1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="budget">Budget (USD):</label>
+      <input type="number" id="budget" name="budget" min="0" required>
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country:</label>
+      <select id="country" name="country" required>
+        <option value="">Select Country</option>
+        <option value="United States of America">United States</option>
+        <option value="France">France</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Germany">Germany</option>
+        <option value="Japan">Japan</option>
+        <option value="Canada">Canada</option>
+        <option value="India">India</option>
+        <option value="Italy">Italy</option>
+        <option value="Spain">Spain</option>
+        <option value="South Korea">South Korea</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="company">Production Company:</label>
+      <input type="text" id="company" name="company" required>
+    </div>
+
+    <div class="form-group">
+      <label>Genres:</label>
+      <div class="checkbox-group" id="genresCheckboxGroup">
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Action"> Action
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Comedy"> Comedy
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Drama"> Drama
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Science Fiction"> Sci-Fi
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Fantasy"> Fantasy
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Horror"> Horror
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Thriller"> Thriller
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Animation"> Animation
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Documentary"> Documentary
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Romance"> Romance
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Adventure"> Adventure
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Crime"> Crime
+        </label>
+        <label class="checkbox-option">
+          <input type="checkbox" name="genres[]" value="Family"> Family
+        </label>
+      </div>
+      <div class="selected-options" id="selectedGenresDisplay"></div>
+    </div>
+
+    <div class="form-group autocomplete-container">
+      <label for="director">Director:</label>
+      <input type="text" id="director" name="director" required>
+      <div class="autocomplete-list" id="autocomplete-list-director"></div>
+    </div>
+
+    <div class="form-group autocomplete-container">
+      <label for="lead_actor">Lead Actor:</label>
+      <input type="text" id="lead_actor" name="lead_actor" required>
+      <div class="autocomplete-list" id="autocomplete-list-actor"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Release Date:</label>
+      <input type="date" id="date" name="date" required>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating:</label>
+      <select id="rating" name="rating" required>
+        <option value="">Select Rating</option>
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+        <option value="NC-17">NC-17</option>
+      </select>
+    </div>
+
+    <button type="submit">Predict Box Office</button>
+  </form>
+
+  <div id="result">
+    <h2>Predicted Box Office Revenue:</h2>
+    <p id="predictionValue">$0</p>
+  </div>
+
+  <script>
+    // Sample data for autocomplete (replace with your actual data)
+    const directorsList = ["Steven Spielberg", "Christopher Nolan", "Quentin Tarantino", "Martin Scorsese", "James Cameron"];
+    const actorsList = ["Tom Hanks", "Leonardo DiCaprio", "Meryl Streep", "Robert De Niro", "Scarlett Johansson"];
+
+    function showAutocomplete(inputElement, list, listId) {
+      const inputValue = inputElement.value.toLowerCase();
+      const autocompleteListElement = document.getElementById(listId);
+      
+      if (!autocompleteListElement) return;
+      
+      autocompleteListElement.innerHTML = '';
+
+      if (!inputValue) {
+        autocompleteListElement.style.display = 'none';
+        return;
+      }
+
+      const filteredItems = list.filter(item =>
+        item.toLowerCase().includes(inputValue)
+      );
+
+      if (filteredItems.length > 0) {
+        filteredItems.forEach(item => {
+          const suggestion = document.createElement('div');
+          suggestion.classList.add('autocomplete-item');
+          suggestion.textContent = item;
+          suggestion.addEventListener('click', () => {
+            inputElement.value = item;
+            autocompleteListElement.style.display = 'none';
+          });
+          autocompleteListElement.appendChild(suggestion);
+        });
+        autocompleteListElement.style.display = 'block';
+      } else {
+        autocompleteListElement.style.display = 'none';
+      }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize autocomplete for director
+      const directorInput = document.getElementById('director');
+      directorInput.addEventListener('input', function() {
+        showAutocomplete(this, directorsList, 'autocomplete-list-director');
+      });
+
+      // Initialize autocomplete for actor
+      const actorInput = document.getElementById('lead_actor');
+      actorInput.addEventListener('input', function() {
+        showAutocomplete(this, actorsList, 'autocomplete-list-actor');
+      });
+
+      // Close autocomplete when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('autocomplete-item') && 
+            e.target.id !== 'director' && 
+            e.target.id !== 'lead_actor') {
+          document.querySelectorAll('.autocomplete-list').forEach(list => {
+            list.style.display = 'none';
+          });
+        }
+      });
+
+      // Update selected genres display
+      document.querySelectorAll('input[name="genres[]"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedGenres);
+      });
+
+      // Form submission
+      document.getElementById('movieForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(this);
+        const data = {
+          runtime: formData.get('runtime'),
+          budget: formData.get('budget'),
+          country: formData.get('country'),
+          company: formData.get('company'),
+          genres: Array.from(formData.getAll('genres[]')).join(','),
+          director: formData.get('director'),
+          lead_actor: formData.get('lead_actor'),
+          date: formData.get('date'),
+          rating: formData.get('rating')
+        };
+
+        // Send to backend
+        fetch('/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams(data).toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Display result
+          const resultDiv = document.getElementById('result');
+          const predictionValue = document.getElementById('predictionValue');
+          predictionValue.textContent = '$' + data.prediction.toLocaleString();
+          resultDiv.style.display = 'block';
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error making prediction. Please try again.');
+        });
+      });
+    });
+
+    function updateSelectedGenres() {
+      const checkboxes = document.querySelectorAll('input[name="genres[]"]:checked');
+      const selectedGenresDisplay = document.getElementById('selectedGenresDisplay');
+      const selectedOptions = Array.from(checkboxes).map(cb => cb.value);
+      selectedGenresDisplay.textContent = selectedOptions.join(', ');
+    }
+  </script>
+</body>
+
+</html>

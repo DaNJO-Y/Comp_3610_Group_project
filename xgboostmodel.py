@@ -7,20 +7,47 @@ from sklearn.preprocessing import OneHotEncoder
 import ast
 import joblib
 
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+
+# Example
+df = pd.DataFrame({
+    'Rating': ['G', 'PG', 'PG-13', 'R', 'Not Rated', 'Unrated', 'NC-17', 'PG']
+})
+
+# Encode
+le = LabelEncoder()
+df['rating_encoded'] = le.fit_transform(df['Rating'])
+
+# Print result
+print(df)
+print("\nLabel mapping:", dict(zip(le.classes_, le.transform(le.classes_))))
+joblib.dump(le,"rating_encoder.pkl")
 # Load and preprocess data
-df = pd.read_csv("possible_encoding.csv")
+# df = pd.read_csv("possible_encoding.csv")
+df = pd.read_csv("final.csv")
+df["rating_encoded"] = le.transform(df['Rating'])
+df = df.drop(["Rating"],axis=1)
+# print(df['Rating'].unique())
+# exit(1)
 if 'Unnamed: 0' in df.columns:
     df = df.drop(columns=['Unnamed: 0'])
 
 # Columns to remove (adjusted for XGBoost's better handling of categoricals)
+# colstoremove = [
+#     'movieId', 'imdb_id', 'original_title', 'production_companies', 
+#     'production_countries', 'release_date', 'title', 'director', 
+#     'Unnamed', 'vote_count', 'vote_average', 'popularity', "director_encoded", "main_actor_encoded"
+# ]
+
 colstoremove = [
     'movieId', 'imdb_id', 'original_title', 'production_companies', 
     'production_countries', 'release_date', 'title', 'director', 
-    'Unnamed', 'vote_count', 'vote_average', 'popularity', "director_encoded", "main_actor_encoded"
+    'Unnamed', 'vote_count', 'vote_average', 'popularity', "Unnamed: 0.1"
 ]
 df = df.drop(columns=colstoremove, errors='ignore')
 df = df.dropna()
-
+print(df.columns)
 # Target engineering: Log-transform revenue (critical for box office)
 y = np.log1p(df["revenue"])  # Using log1p to handle zeros
 X = df.drop("revenue", axis=1)
