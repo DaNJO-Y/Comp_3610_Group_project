@@ -28,6 +28,8 @@ joblib.dump(le,"rating_encoder.pkl")
 df = pd.read_csv("final.csv")
 df["rating_encoded"] = le.transform(df['Rating'])
 df = df.drop(["Rating"],axis=1)
+
+exit(1)
 # print(df['Rating'].unique())
 # exit(1)
 if 'Unnamed: 0' in df.columns:

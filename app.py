@@ -139,7 +139,7 @@ def process_form_data(form, director, lead_actor):
 
 @app.route('/')
 def index():
-    return render_template('model.html')
+    return render_template('modell.html')
 # Define the route to get the form and make predictions
 @app.route('/predict', methods=['POST'])
 def predict():
