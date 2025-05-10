@@ -11,6 +11,7 @@ You can download the necessary files using the links below:
 - [Download-final-movie-dataset](https://drive.google.com/file/d/1yRgxFjLLNqHmPcb3s_N6CEvzgVLvO0GX/view?usp=drive_link)
 - [Download-movie-dataset-accounting-for-inflation](https://drive.google.com/file/d/1VX2QptJ4d1jjAoH8bYGOUT4AlxcZ4RYH/view?usp=drive_link).
 - [Download-movie-dataset-accounting-for-inflation-for-movies-later-than-2000](https://drive.google.com/file/d/132bWpax5tbQxK8nEj744-pZI2JOiEA71/view?usp=drive_link).
+- [Download-rating-dataset](https://drive.google.com/file/d/1P9_DrDyAMrfFCu0ygcULsdpzt2qFaMox/view?usp=sharing).
 
 ### Instructions:
 1. Click the links above to download the files.
