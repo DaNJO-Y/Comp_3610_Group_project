@@ -16,7 +16,7 @@ import pandas as pd
 # Assuming df is your DataFrame
 # Remove columns not suitable for ML
 
-df= pd.read_parquet("finally.parquet")
+df= pd.read_parquet("final_dataset.parquet")
 columns_to_drop = [
     # Identifiers or duplicates
     'Unnamed: 0', 'movieId', 'imdb_id', 'original_title', 'title',

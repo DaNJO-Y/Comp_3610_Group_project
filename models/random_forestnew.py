@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, e
 import joblib
 
 # Load and preprocess data (same as before)
-df = pd.read_parquet("finally.parquet")
+df = pd.read_parquet("final_dataset.parquet")
 columns_to_drop = [
     # Identifiers or duplicates
     'Unnamed: 0', 'movieId', 'imdb_id', 'original_title', 'title',
